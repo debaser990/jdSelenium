@@ -26,13 +26,9 @@ page_number= 1
 
 
 
-def numero():
-       
+def numero():       
     #element1 = driver.find_elements_by_xpath('/html/body/div[2]/div[2]/div[2]/div[2]/div[1]/div/section/div/ul/li[1]/section/div[1]/section/div[1]/p[2]')
-
     element2 = driver.find_elements_by_css_selector('p.contact-info')
-
-   # print(element2)
 
     j = []
     
@@ -45,9 +41,7 @@ def numero():
     numList = []
     for i in j:
         numList.append(IconMap2Num(i))
-        
         #print(numList)
-
     return numList
 
 
@@ -55,7 +49,6 @@ def IconMap2Num(innerList):
     numstr =''
     for i in innerList:
         numstr+= str(phonebook[i])
-
     return numstr
 
 def getName():
@@ -96,7 +89,7 @@ def merge_two_dicts(phonebook, ph):
     z.update(ph)
     return z
   
-stop = 10 ######STOP HERE
+stop = 10 ######STOP HERE                 #######                       ENTER Stopping PageNumer Here
 
 dict1  = {}
 fields = ['Name', 'Phone', 'Rating', 'Rating Count', 'Address']
@@ -132,8 +125,10 @@ for i in range(1,stop+1):
 
     print(dict1)
     csvwriter.writerow(dict1)
+    driver.close()
+    driver.quit()
 
-		#print("#" + str(service_count) + " " , dict_service)
+		
 
 #print(numList)
 #print(nameList)    
@@ -142,8 +137,8 @@ for i in range(1,stop+1):
 #print(rcList)
 #print(dictz)
 
-driver.close()
-driver.quit()
+#driver.close()
+#driver.quit()
     
 
 
