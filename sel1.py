@@ -26,10 +26,12 @@ page_number= 1
 
 
 
-def numero():       
+def numero():
+       
     #element1 = driver.find_elements_by_xpath('/html/body/div[2]/div[2]/div[2]/div[2]/div[1]/div/section/div/ul/li[1]/section/div[1]/section/div[1]/p[2]')
-    element2 = driver.find_elements_by_css_selector('p.contact-info')
 
+    element2 = driver.find_elements_by_css_selector('p.contact-info')
+    
     j = []
     
     for i in range(len(element2)):
@@ -37,11 +39,12 @@ def numero():
   
     for i in j:
         j[j.index(i)] =  re.findall(r"mobilesv icon-\w+",i)
-    
+    for i in j:
+        del i[0:6]
+        
     numList = []
     for i in j:
         numList.append(IconMap2Num(i))
-        #print(numList)
     return numList
 
 
@@ -49,6 +52,7 @@ def IconMap2Num(innerList):
     numstr =''
     for i in innerList:
         numstr+= str(phonebook[i])
+
     return numstr
 
 def getName():
@@ -89,13 +93,13 @@ def merge_two_dicts(phonebook, ph):
     z.update(ph)
     return z
   
-stop = 10 ######STOP HERE                 #######                       ENTER Stopping PageNumer Here
+stop = 2 ######STOP HERE Enter number of pages to crawl
 
 dict1  = {}
 fields = ['Name', 'Phone', 'Rating', 'Rating Count', 'Address']
-out_file = open('RO_MANUFACT.csv','a')
+out_file = open('SavedData.csv','w')
 csvwriter = csv.DictWriter(out_file, delimiter=',', fieldnames=fields)
-
+csvwriter.writeheader()
 
 
 
@@ -113,23 +117,29 @@ for i in range(1,stop+1):
     
 
     if nameList != None:
-        dict1['Name'] = nameList
-    if numList != None:
-        dict1['Phone'] = numList
-    if addList != None:
-        dict1['Address'] = addList
-    if ratList != None:
-        dict1['Rating'] = ratList
-    if rcList != None:
-        dict1['Rating Count'] = rcList
+        for k in range(len(nameList)):
+            
+                   
+            dict1['Name'] = nameList[k]
+            print(numList[k])
+            dict1['Phone'] = numList[k]
+            dict1['Address']= addList[k]
+            dict1['Rating'] = ratList[k]
+            dict1['Rating Count'] = rcList[k]
+             
+            csvwriter.writerow(dict1)          
+            
+        
+
 
     print(dict1)
+    
     csvwriter.writerow(dict1)
     driver.close()
-    driver.quit()
+
+    
 
 		
-
 #print(numList)
 #print(nameList)    
 #print(addList)
@@ -137,8 +147,8 @@ for i in range(1,stop+1):
 #print(rcList)
 #print(dictz)
 
-#driver.close()
-#driver.quit()
+out_file.close()
+driver.quit()
     
 
 
