@@ -134,7 +134,7 @@ for i in range(1,stop+1):
 
     print(dict1)
     
-    csvwriter.writerow(dict1)
+  
     driver.close()
 
     
